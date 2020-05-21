@@ -1,0 +1,17 @@
+#!/bin/bash
+set -ueo pipefail
+
+DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+
+# shellcheck source=lib/shared.bash
+. "$DIR/../lib/shared.bash"
+
+precommand="$(plugin_read_list PRECOMMAND)"
+
+if [[ -n "$precommand" ]] ; then
+  IFS=$'\n'
+  for line in $precommand ;
+  do
+    eval $line
+  done
+fi
